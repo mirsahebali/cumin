@@ -10,5 +10,10 @@ find_package(raylib REQUIRED)
 include_directories(include)
 include_directories(deps)
 
-add_executable(${PROJECT_NAME} objects.cpp utils.cpp render.cpp main.cpp)
+add_executable(${PROJECT_NAME}
+                  objects.cpp
+                  draw.cpp
+                  utils.cpp
+                  render.cpp
+                  main.cpp)
 target_link_libraries(${PROJECT_NAME} raylib)

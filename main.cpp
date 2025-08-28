@@ -1,3 +1,4 @@
+#include <iostream>
 #include <math.h>
 #include <raylib.h>
 
@@ -5,6 +6,8 @@
 #include <stdlib.h>
 
 #include "app.h"
+#include "colors.h"
+#include "draw.h"
 #include "objects.h"
 #include "render.h"
 #include "utils.h"
@@ -12,7 +15,7 @@
 int main(int argc, char *argv[]) {
 
   SetTargetFPS(60);
-  SetConfigFlags(FLAG_FULLSCREEN_MODE);
+  // SetConfigFlags(FLAG_FULLSCREEN_MODE);
 
   InitWindow(1920, 1080, "Cumin");
 
@@ -29,6 +32,9 @@ int main(int argc, char *argv[]) {
   camera.zoom = 1.0f;
 
   Rect rect1(Pos2{0, 0}, 3, 3, BLUE, true);
+  Rect rect2(Pos2{-1, -1}, -3, 3, CYAN, true);
+  Rect rect3(Pos2{6, 6}, -3, 3, LIGHTGREEN, true);
+  Circle circle1(Pos2{-3, 0}, 1, RED, true);
 
   AppState *app_state =
       new AppState(PreDefBackgrounds::Black, GraphLinesColor::White,
@@ -57,6 +63,9 @@ int main(int argc, char *argv[]) {
     BeginMode2D(camera);
 
     rect1.draw();
+    rect2.draw();
+    rect3.draw();
+    circle1.draw();
 
     draw_graph(app_state->window_width, app_state->window_height);
     draw_x_y_axis(app_state->window_width, app_state->window_height);
@@ -68,6 +77,7 @@ int main(int argc, char *argv[]) {
 
     draw_switch_scene_button(app_state);
 
+    draw_mouse_hover_coordinates();
     EndDrawing();
   }
 

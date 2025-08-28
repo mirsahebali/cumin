@@ -2,6 +2,7 @@
 #include <vector>
 
 #include "defs.h"
+#include "draw.h"
 #include "objects.h"
 
 void Object::draw() {}
@@ -81,12 +82,10 @@ void Rect::draw() {
   Vector2 vec_pos = pos.to_vec2();
   int mapped_width = width * GRID_SIZE;
   int mapped_height = height * GRID_SIZE;
-  if (solid) {
-    DrawRectangle(vec_pos.x, vec_pos.y, mapped_width, mapped_height, color);
-  } else {
-    DrawRectangleLines(vec_pos.x, vec_pos.y, mapped_width, mapped_height,
-                       color);
-  }
+  draw_rectangle(vec_pos,
+                 Vector2{static_cast<float>(mapped_width),
+                         static_cast<float>(mapped_height)},
+                 solid, color);
 }
 void Rect::set_animation_duration_ms(int animation_duration_ms) {
   this->animation_duration_ms = animation_duration_ms;
@@ -103,11 +102,14 @@ Circle::Circle(Pos2 start_pos, int radius, Color color, bool solid) {
 }
 
 void Circle::draw() {
+  int mapped_radius = radius * GRID_SIZE;
   if (solid) {
-    DrawCircle(pos.x, pos.y, radius, color);
+    DrawCircleV(pos.to_vec2(), mapped_radius, color);
   } else {
-    DrawCircleLines(pos.x, pos.y, radius, color);
+    DrawCircleLinesV(pos.to_vec2(), mapped_radius, color);
   }
+
+  DrawCircleV(pos.to_vec2(), 5, RAYWHITE);
 }
 void Circle::set_animation_duration_ms(int animation_duration_ms) {}
 void Circle::start_animation() {}

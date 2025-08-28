@@ -24,6 +24,7 @@ public:
     if (y < 0) {
       vec_pos.y = (GetScreenHeight() / 2.0) + (GRID_SIZE * y);
     }
+
     return vec_pos;
   }
 };

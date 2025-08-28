@@ -1,5 +1,8 @@
 #include "utils.h"
 #include "app.h"
+#include "defs.h"
+
+#include <math.h>
 #include <raylib.h>
 
 Color map_predef_to_color(PreDefBackgrounds bg) {
@@ -62,4 +65,21 @@ bool is_mouse_above_rect(Rectangle rect) {
   return true;
 }
 
-Pos2 map_pixel_to_graph_coordinate(Vector2 pos) { return Pos2{0, 0}; }
+double round_away_from_zero(double x) {
+  if (0.0 == x)
+    return 0.0;
+  return (0 < x) ? ceil(x) : floor(x);
+}
+
+Pos2 map_pixel_to_graph_coordinate(Vector2 pos) {
+  int screen_width_half = GetScreenWidth() / 2;
+  int screen_height_half = GetScreenHeight() / 2;
+  int pos_x = pos.x - screen_width_half;
+  int pos_y = pos.y - screen_height_half;
+
+  Pos2 resultant = {};
+  resultant.x = round_away_from_zero((pos_x / float(GRID_SIZE)));
+  resultant.y = round_away_from_zero(-pos_y / float(GRID_SIZE));
+
+  return resultant;
+}
