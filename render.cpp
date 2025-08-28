@@ -8,6 +8,7 @@
 #define HEADER_FONT_SIZE 25.0
 
 void draw_switch_scene_button(AppState *state) {
+
   int height = state->window_height;
   int total_text_width = calc_total_screen_tabs_text_width();
 
@@ -102,6 +103,7 @@ void draw_main_title(int screen_width, int screen_height) {
 }
 
 void draw_origin_marking(AppState *state) {
+
   int w = state->window_width;
   int h = state->window_height;
   DrawCircleLines(w / 2, h / 2, 1, RED);

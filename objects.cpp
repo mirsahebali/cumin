@@ -1,7 +1,12 @@
 #include <raylib.h>
 #include <vector>
 
+#include "defs.h"
 #include "objects.h"
+
+void Object::draw() {}
+void Object::set_animation_duration_ms(int animation_duration_ms) {}
+void Object::start_animation() {}
 
 void Object::translate(int tx, int ty) {
   float matrix[3][3] = {{1, 0, float(tx)}, {0, 1, float(ty)}, {0, 0, 1}};
@@ -62,8 +67,7 @@ void Object::sheer(SheerDirection dir, int sh_factor) {
   this->transformations.push_back(data);
 }
 
-Rect::Rect(Vector2 start_pos, int width, int height, Color color,
-           bool is_solid) {
+Rect::Rect(Pos2 start_pos, int width, int height, Color color, bool is_solid) {
   this->pos = start_pos;
   this->width = width;
   this->height = height;
@@ -74,10 +78,14 @@ Rect::Rect(Vector2 start_pos, int width, int height, Color color,
 }
 
 void Rect::draw() {
+  Vector2 vec_pos = pos.to_vec2();
+  int mapped_width = width * GRID_SIZE;
+  int mapped_height = height * GRID_SIZE;
   if (solid) {
-    DrawRectangle(pos.x, pos.y, width, height, color);
+    DrawRectangle(vec_pos.x, vec_pos.y, mapped_width, mapped_height, color);
   } else {
-    DrawRectangleLines(pos.x, pos.y, width, height, color);
+    DrawRectangleLines(vec_pos.x, vec_pos.y, mapped_width, mapped_height,
+                       color);
   }
 }
 void Rect::set_animation_duration_ms(int animation_duration_ms) {
@@ -85,7 +93,7 @@ void Rect::set_animation_duration_ms(int animation_duration_ms) {
 };
 void Rect::start_animation() {};
 
-Circle::Circle(Vector2 start_pos, int radius, Color color, bool solid) {
+Circle::Circle(Pos2 start_pos, int radius, Color color, bool solid) {
   this->pos = start_pos;
   this->radius = radius;
   this->color = color;
@@ -104,8 +112,7 @@ void Circle::draw() {
 void Circle::set_animation_duration_ms(int animation_duration_ms) {}
 void Circle::start_animation() {}
 
-Triangle::Triangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color,
-                   bool solid) {
+Triangle::Triangle(Pos2 v1, Pos2 v2, Pos2 v3, Color color, bool solid) {
   this->pos = v1;
   this->v1 = v1;
   this->v2 = v2;
@@ -117,16 +124,17 @@ Triangle::Triangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color,
 }
 
 void Triangle::draw() {
+
   if (solid) {
-    DrawTriangle(v1, v2, v3, color);
+    DrawTriangle(v1.to_vec2(), v2.to_vec2(), v3.to_vec2(), color);
   } else {
-    DrawTriangleLines(v1, v2, v3, color);
+    DrawTriangleLines(v1.to_vec2(), v2.to_vec2(), v3.to_vec2(), color);
   }
 }
 void Triangle::set_animation_duration_ms(int animation_duration_ms) {}
 void Triangle::start_animation() {}
 
-Line::Line(Vector2 start_pos, Vector2 end_pos, Color color, bool solid) {
+Line::Line(Pos2 start_pos, Pos2 end_pos, Color color, bool solid) {
   this->pos = start_pos;
   this->end_pos = end_pos;
   this->color = color;
@@ -139,7 +147,7 @@ void Line::draw() { DrawLine(pos.x, pos.y, end_pos.x, end_pos.y, color); }
 void Line::set_animation_duration_ms(int animation_duration_ms) {}
 void Line::start_animation() {}
 
-Point::Point(Vector2 start_pos) {
+Point::Point(Pos2 start_pos) {
   this->pos = start_pos;
   this->solid = true;
   this->shape = ObjectShape::Point;

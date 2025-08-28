@@ -1,11 +1,32 @@
 #pragma once
 
+#include "defs.h"
+#include <cstdlib>
 #include <raylib.h>
 
-typedef struct Pos2 {
+class Pos2 {
+public:
   int x;
   int y;
-} Pos2;
+
+  Vector2 to_vec2() {
+    Vector2 vec_pos{0, 0};
+    if (x >= 0) {
+      vec_pos.x = (GetScreenWidth() / 2.0) + (GRID_SIZE * x);
+    }
+    if (x < 0) {
+      vec_pos.x = (GetScreenWidth() / 2.0) - (GRID_SIZE * abs(x));
+    }
+
+    if (y >= 0) {
+      vec_pos.y = (GetScreenHeight() / 2.0) - (GRID_SIZE * y);
+    }
+    if (y < 0) {
+      vec_pos.y = (GetScreenHeight() / 2.0) + (GRID_SIZE * y);
+    }
+    return vec_pos;
+  }
+};
 
 typedef enum class PreDefBackgrounds {
   Black,

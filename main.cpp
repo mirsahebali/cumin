@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "app.h"
+#include "objects.h"
 #include "render.h"
 #include "utils.h"
 
@@ -26,6 +27,8 @@ int main(int argc, char *argv[]) {
       Vector2{.x = float(screen_width / 2.0), .y = float(screen_height / 2.0)};
   camera.rotation = 0;
   camera.zoom = 1.0f;
+
+  Rect rect1(Pos2{0, 0}, 3, 3, BLUE, true);
 
   AppState *app_state =
       new AppState(PreDefBackgrounds::Black, GraphLinesColor::White,
@@ -52,6 +55,8 @@ int main(int argc, char *argv[]) {
     ClearBackground(map_predef_to_color(app_state->background));
 
     BeginMode2D(camera);
+
+    rect1.draw();
 
     draw_graph(app_state->window_width, app_state->window_height);
     draw_x_y_axis(app_state->window_width, app_state->window_height);

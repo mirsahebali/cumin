@@ -23,7 +23,7 @@ typedef struct TransformationData {
 
 class Object {
 public:
-  Vector2 pos;
+  Pos2 pos;
   Color color;
   bool solid;
   ObjectShape shape;
@@ -39,6 +39,8 @@ public:
   void sheer(SheerDirection dir, int sh_factor);
   // TODO: we'll tackle this a bit later
   void reflect(int x, int y);
+
+  virtual ~Object() = default;
 };
 
 class Rect : public virtual Object {
@@ -50,7 +52,7 @@ public:
   void set_animation_duration_ms(int animation_duration_ms) override;
   void start_animation() override;
 
-  Rect(Vector2 start_pos, int width, int height, Color color, bool solid);
+  Rect(Pos2 start_pos, int width, int height, Color color, bool solid);
 
 private:
   int animation_duration_ms;
@@ -65,7 +67,7 @@ public:
   void set_animation_duration_ms(int animation_duration_ms) override;
   void start_animation() override;
 
-  Circle(Vector2 start_pos, int radius, Color color, bool solid);
+  Circle(Pos2 start_pos, int radius, Color color, bool solid);
 
 private:
   int animation_duration_ms;
@@ -74,13 +76,13 @@ private:
 
 class Triangle : public virtual Object {
 public:
-  Vector2 v1, v2, v3;
+  Pos2 v1, v2, v3;
 
   void draw() override;
   void set_animation_duration_ms(int animation_duration_ms) override;
   void start_animation() override;
 
-  Triangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color, bool solid);
+  Triangle(Pos2 v1, Pos2 v2, Pos2 v3, Color color, bool solid);
 
 private:
   int animation_duration_ms;
@@ -89,13 +91,13 @@ private:
 
 class Line : public virtual Object {
 public:
-  Vector2 end_pos;
+  Pos2 end_pos;
 
   void draw() override;
   void set_animation_duration_ms(int animation_duration_ms) override;
   void start_animation() override;
 
-  Line(Vector2 start_pos, Vector2 end_pos, Color color, bool solid);
+  Line(Pos2 start_pos, Pos2 end_pos, Color color, bool solid);
 
 private:
   int animation_duration_ms;
@@ -108,7 +110,7 @@ public:
   void set_animation_duration_ms(int animation_duration_ms) override;
   void start_animation() override;
 
-  Point(Vector2 start_pos);
+  Point(Pos2 start_pos);
 
 private:
   int animation_duration_ms;

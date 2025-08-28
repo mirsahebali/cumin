@@ -1,6 +1,5 @@
 #include "utils.h"
 #include "app.h"
-#include "render.h"
 #include <raylib.h>
 
 Color map_predef_to_color(PreDefBackgrounds bg) {
