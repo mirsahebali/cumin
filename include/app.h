@@ -1,6 +1,12 @@
 #pragma once
 
 #include <raylib.h>
+
+typedef struct Pos2 {
+  int x;
+  int y;
+} Pos2;
+
 typedef enum class PreDefBackgrounds {
   Black,
   White,
@@ -13,8 +19,8 @@ typedef enum Transformations {
   Translation,
   Rotation,
   Scaling,
-  Reflection,
   Sheering,
+  Reflection,
   End,
 } Screens,
     Transformations;

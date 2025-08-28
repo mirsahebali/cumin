@@ -32,7 +32,7 @@ const char *screen_name(Screens screen) {
   }
 }
 
-int calc_total_screen_text_width() {
+int calc_total_screen_tabs_text_width() {
   int total_width = 0;
 
   for (int i = Screens::Translation; i != Screens::End; i++) {
@@ -62,3 +62,5 @@ bool is_mouse_above_rect(Rectangle rect) {
 
   return true;
 }
+
+Pos2 map_pixel_to_graph_coordinate(Vector2 pos) { return Pos2{0, 0}; }

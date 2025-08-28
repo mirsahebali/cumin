@@ -9,7 +9,7 @@
 
 void draw_switch_scene_button(AppState *state) {
   int height = state->window_height;
-  int total_text_width = calc_total_screen_text_width();
+  int total_text_width = calc_total_screen_tabs_text_width();
 
   int start_x = (state->window_width / 2) - (total_text_width / 2);
   DrawRectangle(start_x - 10, height - 40, total_text_width + 60, 40, CYAN);
@@ -58,35 +58,40 @@ void draw_graph(int screen_width, int screen_height) {
   int rows = screen_height / GRID_SIZE;
   int cols = screen_width / GRID_SIZE;
 
-  // INFO: Draw rows
-  for (int i = 0; i <= rows; i++) {
-    DrawLine(0, i * GRID_SIZE, screen_width, i * GRID_SIZE, GRAY);
+  // Draw rows from start x to center
+  for (int y = screen_height / 2; y >= 0; y -= GRID_SIZE) {
+    DrawLine(0, y, screen_width, y, GRAY);
   }
 
-  // INFO: Draw cols
-  for (int i = 0; i <= cols; i++) {
-    DrawLine(i * GRID_SIZE, 0, i * GRID_SIZE, screen_height, GRAY);
+  // Draw cols from start y to center
+  for (int x = screen_width / 2; x >= 0; x -= GRID_SIZE) {
+    DrawLine(x, 0, x, screen_height, GRAY);
+  }
+
+  // Draw rows from center to end x
+  for (int i = 0; i <= rows / 2; i++) {
+    DrawLine(0, (i * GRID_SIZE) + (screen_height / 2), screen_width,
+             (i * GRID_SIZE) + (screen_height / 2), GRAY);
+  }
+
+  // Draw cols from center to end y
+  for (int i = 0; i <= cols / 2; i++) {
+    DrawLine((i * GRID_SIZE) + (screen_width / 2), 0,
+             (i * GRID_SIZE) + (screen_width / 2), screen_height, GRAY);
   }
 }
 
 void draw_x_y_axis(int screen_width, int screen_height) {
 
-  int rows = screen_height / GRID_SIZE;
-  int cols = screen_width / GRID_SIZE;
-
-  // end x axis right before one grid
-  int x_end = GRID_SIZE + ((cols - 2) * GRID_SIZE);
-  // y of the x axis should be at the middle column line
-  int x_axis_y_pos = (rows / 2) * GRID_SIZE;
-
   // draw x axis
-  DrawLineEx((Vector2){GRID_SIZE, float(x_axis_y_pos)},
-             (Vector2){float(x_end), float(x_axis_y_pos)}, 5.0, YELLOW);
-  int y_end = GRID_SIZE + ((rows - 2) * GRID_SIZE);
-  int y_axis_x_pos = (cols / 2) * GRID_SIZE;
+  DrawLineEx(Vector2{float(screen_width / 2.0), 0},
+             Vector2{float(screen_width / 2.0), float(screen_height)}, 3.0,
+             YELLOW);
+
   // draw y axis
-  DrawLineEx((Vector2){float(y_axis_x_pos), GRID_SIZE},
-             (Vector2){float(y_axis_x_pos), float(y_end)}, 5.0, YELLOW);
+  DrawLineEx(Vector2{0, float(screen_height / 2.0)},
+             Vector2{float(screen_width), float(screen_height / 2.0)}, 3.0,
+             YELLOW);
 }
 
 void draw_main_title(int screen_width, int screen_height) {
@@ -94,4 +99,14 @@ void draw_main_title(int screen_width, int screen_height) {
   int text_size = MeasureText(text, HEADER_FONT_SIZE);
   DrawText(text, (screen_width / 2) - (text_size / 2), 20.0, HEADER_FONT_SIZE,
            BLUE);
+}
+
+void draw_origin_marking(AppState *state) {
+  int w = state->window_width;
+  int h = state->window_height;
+  DrawCircleLines(w / 2, h / 2, 1, RED);
+  DrawCircleLines(w / 2, h / 2, 1.5, RED);
+  for (float i = 8.0; i < 12.0; i += 0.5) {
+    DrawCircleLines(w / 2, h / 2, i, RED);
+  }
 }

@@ -4,3 +4,4 @@
 - Rotation
 - Scaling
 - Reflection
+- Sheering

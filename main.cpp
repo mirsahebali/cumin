@@ -55,6 +55,7 @@ int main(int argc, char *argv[]) {
 
     draw_graph(app_state->window_width, app_state->window_height);
     draw_x_y_axis(app_state->window_width, app_state->window_height);
+    draw_origin_marking(app_state);
 
     EndMode2D();
 
